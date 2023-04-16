@@ -4,6 +4,8 @@
 -->
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 	
     <title>Isaac McSorley</title>
     <meta charset="utf-8" />
@@ -114,10 +116,11 @@
 	
 	</style>
   </head>
+  
   <body>
     <div class="profile">
       <h1>Hello World! <br /> I'm Isaac McSorley</h1>
-      <img src="images/profile-pic.jpeg" alt="Isaac McSorley">
+      <img src="images/profile-pic.jpeg" alt="Isaac McSorley" >
     </div>
     <div style="text-align: center;">
       <h2>About Me</h2>
@@ -136,22 +139,45 @@
   
     </div>
 
+    <script>
+      function openImage(imageSrc) {
+        var img = $('<img>').attr('src', imageSrc).css({
+          'max-width': '90%',
+          'max-height': '90%',
+          'position': 'fixed',
+          'top': '50%',
+          'left': '50%',
+          'transform': 'translate(-50%, -50%)',
+          'z-index': '1000'
+        });
     
+        var overlay = $('<div>').css({
+          'background-color': 'rgba(0, 0, 0, 0.7)',
+          'width': '100%',
+          'height': '100%',
+          'position': 'fixed',
+          'top': '0',
+          'left': '0',
+          'z-index': '999'
+        }).on('click', function() {
+          $(this).remove();
+          img.remove();
+        });
     
-
-
-
-
-  </body>
-      <!-- STOP -->
+        $('body').append(overlay);
+        $('body').append(img);
+      }
+    </script>
+    
+      <!-- Projects Section -->
 
 		  <article>
             <header>
               <div style="text-align: center;">
-                <h2>Projects</h2>
+                <h2>Data Science / Analytics Projects</h2>
               </div>
               <h3>
-                <center> 
+            <center> 
                 <a href="https://github.com/immcsorley/DatabaseProject"
                   >Database development for University of Iowa College of Nursing </a
                 >
@@ -225,9 +251,61 @@
             </ul>
           </article>
           <article>
-            <header>
-              <h2>
+            
+      
+      </section>
+        
+<!-- Geovisualization Portfolio -->
+
+<style>
+  .description {
+    line-height: 1.35; /* Adjust this value as needed; lower values will make the line spacing tighter */
+  }
+  .image.fit img {
+    height: 275px; /* Set a fixed height for images */
+    object-fit: cover; /* Ensure the images maintain their aspect ratio */
+  }
+  .geo-portfolio-section {
+  margin-top: -40px;
+}
+
+</style>
+<section class="geo-portfolio-section">
+  <header>
+    <div style="text-align: center;">
+      <h2>Geovisualization Portfolio</h2>
+    </div>
+  </header>
+  <div class="posts" style="display: flex; justify-content: space-between;">
+    <article style="flex: 1; margin-right: 20px; box-sizing: border-box;">
+      <header>
+        <h3><a href="javascript:openImage('images/geo1.png')">Chicago Bikeshare Flows</a></h3>
+      </header>
+      <a href="javascript:openImage('images/geo1.png')" class="image fit"><img src="images/geo1.png" alt="Geo Project 1" /></a>
+      <p class="description">The spatial patterns reveal that bikeshare activity primarily occurs in a north-south direction within Chicago, concentrating around the downtown Loop area and Navy Pier. These patterns suggest the influence of location characteristics such as density of businesses, traffic, bikeshare routes, and availability of Divvy bikes. </p>
+    </article>
+    <article style="flex: 1; margin-right: 20px; box-sizing: border-box;">
+      <header>
+        <h3><a href="javascript:openImage('images/geo2.png')">LA County, CA Bivariate </a></h3>
+      </header>
+      <a href="javascript:openImage('images/geo2.png')" class="image fit"><img src="images/geo2.png" alt="Geo Project 2" /></a>
+      <p class="description">This bivariate choropleth map highlights the inverse relationship between Median Family Income and Poverty Rate in LA County census tracts. Darker colors represent areas with low income and high poverty, particularly in the middle south and northeast corners of the county.
+      </p>
+    </article>
+    <article style="flex: 1; box-sizing: border-box;">
+      <header>
+        <h3><a href="javascript:openImage('images/geo3.png')">Black Population in the U.S.</a></h3>
+      </header>
+      <a href="javascript:openImage('images/geo3.png')" class="image fit"><img src="images/geo3.png" alt="Geo Project 3" /></a>
+      <p class="description">This graduated symbol map illustrates the distribution of the Black population in the United States using proportional circles. The spatial patterns reveal higher concentrations in the Southeast and urban areas nationwide. These patterns provide insight into the historical, cultural, and socio-economic factors shaping population distributions.</p>
+    </article>
+  </div>
+</section>
+
+
+
       </div>
+
 
       <!-- Footer -->
       <footer id="footer">          
