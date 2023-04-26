@@ -58,7 +58,7 @@
 			<hr />
 			<div class="row">
 				<div class="col-sm-4">
-					<p>Data from <a href="https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data/">USDA</a>, maps by Isaac McSorley</p>
+					<p>Data from <a href="https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data/">USDA</a>, maps by Isaac McSorley <br> <br> Put cursor over desired county to view statistics</p>
 				</div>
 				<div class='col-sm-8 mapButtons'>
 					<span class="pull-right">
@@ -130,7 +130,7 @@
 	var idAttribute = 'FIPS', nameAttribute = 'NAME';
 
 	// Find the abbreviations of color names from https://colorbrewer2.org/
-	var colors =  colorbrewer.YlOrBr;
+	var colors =  colorbrewer.YlGnBu;
 
 	// Chart/map attributes (variables) and formats based on the divs defined above
 	// For attribute 1 (the same for all others), see the description of the parameters below.
@@ -141,20 +141,20 @@
 	// https://observablehq.com/@d3/d3-format
 	var att1 = 'POP10_SQMI', att1alias = 'Population Per Square Mile', att1format = '.0f',
 	att2 = 'ACS16_MedAge', att2alias =  'Median Age', att2format = '.0f',
-	att3 = 'OWNER_OCC', att3alias = 'Owner Occupied Housing', att3format = '.0f',
-	att4 = 'RENTER_OCC', att4alias = 'Renter Occupied Housing', att4format = '.0f';
+	att3 = 'OWNER_OCC', att3alias = 'Owner Occupied Housing Per Square Mile', att3format = '.0f',
+	att4 = 'RENTER_OCC', att4alias = 'Renter Occupied Housing Per Square Mile', att4format = '.0f';
 
   // enter below all variables that should be normalized. If you would like to multiple the variables
 	// with a constant value enter them in multiplyBy array. If there is no need for multiplication,
 	// simply enter 1 for each value in multiplyBy.
-  //var attributesToBeNormalized = [att3, att4];
-	//var multiplyBy = [1,1];
-	//var divideBy = ['SQMI','SQMI'];
+  var attributesToBeNormalized = [att3, att4];
+	var multiplyBy = [1,1];
+	var divideBy = ['SQMI','SQMI'];
 	// if your variables are not raw counts and they are already normalized, comment out above, and
 	//uncomment below:
-	 var attributesToBeNormalized = [];
-	 var multiplyBy = [];
-	 var divideBy = [];
+	 //var attributesToBeNormalized = [];
+	// var multiplyBy = [];
+	// var divideBy = [];
 
 	//DO NOT CHANGE ANYTHING BELOW THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -419,7 +419,7 @@
 						// map tooltip
 						d3.select(tip)
 						.style('display', null)
-						.html("<p><b>" + name + " "+ nameAttribute + "</b><br/>" + d.var +
+						.html("<p><b>" + name + " " + "</b><br/>" + d.var +
 						": " + d3.format(d.form)(polygon.properties[d.var]) + "</p>");
 					});
 				}
