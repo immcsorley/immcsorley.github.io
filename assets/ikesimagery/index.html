@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drone Portfolio</title>
+    <style>
+      /* CSS styles for the page */
+      /* Add your own custom styles here */
+
+      /* Reset default styles */
+      body,
+      h1,
+      h2,
+      p,
+      figure,
+      ul,
+      li {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        color: #000000;
+        line-height: 1.6;
+        overflow-x: hidden;
+        background-color: #f2f2f2; /* Set the background color */
+        background-image: url("images/background.jpg"); /* Set the background image */
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+
+      header {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        justify-content: flex-start; /* Align elements to the top */
+        color: #050505;
+        text-align: center;
+        padding-top: 20px;
+      }
+
+      header video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 85%;
+        object-fit: cover;
+        opacity: 0.9;
+        border: 3px solid #000; /* Add a thin black border */
+        box-sizing: border-box;
+      }
+
+      header h1 {
+        font-size: 48px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+        background-color: rgba(0, 0, 0, 0.7); /* Darken the background color */
+        color: #fff; /* Set the text color to white */
+        padding: 10px 20px; /* Add padding to make it stand out */
+        border-radius: 5px; /* Add rounded corners */
+        margin-bottom: 10px; /* Add some space below the heading */
+      }
+
+      header p {
+        background-color: rgba(0, 0, 0, 0.7); /* Darken the background color */
+        color: #fff; /* Set the text color to white */
+        padding: 10px 20px; /* Add padding to make it stand out */
+        border-radius: 5px; /* Add rounded corners */
+        margin-bottom: 20px; /* Add some space below the paragraph */
+        opacity: 1; /* Increase opacity to make it stand out */
+      }
+
+      header .social-icons {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+      }
+
+      header .social-icons a {
+        margin-right: 10px;
+        display: inline-block;
+      }
+
+      header .social-icons img {
+        width: 30px;
+        height: 30px;
+      }
+
+      header .get-in-touch,
+      .image-gallery-link {
+        display: inline-block;
+        margin-top: 10px;
+        background-color: rgba(
+          51,
+          51,
+          51,
+          0.9
+        ); /* Darken the background color */
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 14px;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        opacity: 1; /* Increase opacity to make them stand out */
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 50px 0;
+        text-align: center;
+      }
+
+      .slideshow-container {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .slideshow-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 1s ease;
+        border: 3px solid #000; /* Add a thin black border */
+        box-sizing: border-box;
+      }
+
+      .slideshow-image.active {
+        opacity: 1;
+      }
+
+      .video-container {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: calc(75vh - 100px); /* Adjust the height as needed */
+        margin-bottom: 20px;
+        overflow: hidden;
+        border: 3px solid #000; /* Add a thin black border */
+        box-sizing: border-box;
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        header h1 {
+          font-size: 36px;
+        }
+
+        h2 {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <video autoplay loop muted>
+        <source src="videos/Chicago_City.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/ikesimagery/" target="_blank">
+          <img src="images/ig2.png" alt="Instagram" />
+        </a>
+        <a href="https://www.facebook.com/your-facebook" target="_blank">
+          <img src="images/fb2.png" alt="Facebook" />
+        </a>
+      </div>
+      <div>
+        <a class="get-in-touch" href="mailto:your-email@example.com"
+          >Get in Touch</a
+        >
+        <a class="image-gallery-link" href="www.youtube.com">Image Gallery</a>
+      </div>
+      <h1>@ikesimagery</h1>
+      <p>
+        Welcome to my portfolio! All photos/videos are my own. Thanks for
+        checking it out!
+      </p>
+    </header>
+    <main>
+      <div class="slideshow-container">
+        <img
+          class="slideshow-image"
+          src="images/mountains.jpg"
+          alt="Mountains"
+        />
+        <img
+          class="slideshow-image active"
+          src="images/image1.jpg"
+          alt="Image 1"
+        />
+        <img
+          class="slideshow-image"
+          src="images/DJI_0285.JPG"
+          alt="Mountains and Baseball"
+        />
+        <img class="slideshow-image" src="images/DJI_0465.JPG" alt="Football" />
+        <img class="slideshow-image" src="images/image2.jpg" alt="Image 2" />
+        <img class="slideshow-image" src="images/image3.jpg" alt="Image 3" />
+        <img class="slideshow-image" src="images/image4.jpg" alt="Image 4" />
+        <img class="slideshow-image" src="images/image5.jpg" alt="Image 5" />
+        <img class="slideshow-image" src="images/image6.jpg" alt="Image 6" />
+        <img class="slideshow-image" src="images/baseball.jpg" alt="Baseball" />
+        <img
+          class="slideshow-image"
+          src="images/Chicago_Night.jpg"
+          alt="Chicago Night"
+        />
+        <img class="slideshow-image" src="images/UofI.jpg" alt="U of Iowa" />
+        <!-- Add more image items as needed -->
+      </div>
+
+      <!-- Second video section -->
+      <div class="video-container">
+        <video autoplay loop muted style="max-width: 100%; max-height: 100%">
+          <source src="videos/DJI_0679.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="video-container">
+        <video autoplay loop muted style="max-width: 100%; max-height: 100%">
+          <source src="videos/Mountains2.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Contact section -->
+      <div class="contact-section">
+        <h2>About Me</h2>
+        <p>
+          I am a passionate drone photographer specializing in capturing
+          breathtaking aerial images and videos. I can take a variety of
+          videos/images; just let me know what you are interested in, and I
+          would love to help! Image gallery and website improvements coming soon
+          :)
+        </p>
+        <h2>Contact Me</h2>
+        <!-- Add your contact form or any other contact information here -->
+        <section class="split contact">
+          <section class="alt">
+            <h3>Location</h3>
+            <p>
+              I currently reside in <strong>Iowa City, IA</strong> but
+              relocating to <strong>Tampa, FL</strong> post-graduation<br />
+            </p>
+          </section>
+          <section>
+            <h3>Email</h3>
+            <p>
+              <a href="mailto:isaacmcsorley@gmail.com"
+                >isaacmcsorley@gmail.com</a
+              >
+            </p>
+          </section>
+          <section>
+            <h3>Socials</h3>
+            <ul style="list-style-type: none; padding: 0">
+              <li style="display: inline-block; margin-right: 10px">
+                <a
+                  href="https://linkedin.com/in/immcsorley"
+                  class="icon brands alt fa-linkedin"
+                >
+                  <span class="label">Linkedin</span>
+                </a>
+              </li>
+              <li style="display: inline-block">
+                <a
+                  href="https://github.com/immcsorley"
+                  class="icon brands alt fa-github"
+                >
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </section>
+      </div>
+    </main>
+    <script>
+      // JavaScript for slideshow functionality
+      const slideshowImages = document.querySelectorAll(".slideshow-image");
+      let currentImageIndex = 0;
+
+      function nextImage() {
+        slideshowImages[currentImageIndex].classList.remove("active");
+        currentImageIndex = (currentImageIndex + 1) % slideshowImages.length;
+        slideshowImages[currentImageIndex].classList.add("active");
+      }
+
+      setInterval(nextImage, 3500); // Change slide every 3.5 seconds
+    </script>
+  </body>
+</html>
