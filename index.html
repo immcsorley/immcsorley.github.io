@@ -1,485 +1,1547 @@
-<!DOCTYPE html>
-<!--
-	Isaac McSorley Web Portfolio
--->
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-	
-    <title>Isaac McSorley</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Isaac McSorley — Data Analyst</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript
-      ><link rel="stylesheet" href="assets/css/noscript.css"
-    /></noscript>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #0a0a0f;
+        --surface: #111118;
+        --card: #16161f;
+        --border: #252535;
+        --accent: #4f8ef7;
+        --accent2: #7c5cfc;
+        --gold: #f0b43a;
+        --text: #e8e8f0;
+        --muted: #8888aa;
+        --font-head: "Syne", sans-serif;
+        --font-body: "DM Sans", sans-serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--accent2);
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.4;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 60px;
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--font-head);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.02em;
+        color: var(--text);
+      }
+      .nav-logo span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 36px;
+        list-style: none;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-icons {
+        display: flex;
+        gap: 16px;
+      }
+      .nav-icons a {
+        color: var(--muted);
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+      }
+      .nav-icons a:hover {
+        color: var(--accent);
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 120px 60px 80px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-glow {
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(79, 142, 247, 0.12) 0%,
+          transparent 70%
+        );
+        top: -100px;
+        right: -200px;
+        pointer-events: none;
+      }
+      .hero-glow2 {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(124, 92, 252, 0.08) 0%,
+          transparent 70%
+        );
+        bottom: -100px;
+        left: -100px;
+        pointer-events: none;
+      }
+
+      /* Hero: two-column layout */
+      .hero-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 60px;
+      }
+      .hero-text {
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* Profile photo */
+      .hero-photo-wrap {
+        flex-shrink: 0;
+        position: relative;
+        width: 280px;
+        height: 280px;
+      }
+      .hero-photo-glow {
+        position: absolute;
+        inset: -40px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(79, 142, 247, 0.18) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+      .hero-photo-ring {
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+        border: 1px solid rgba(79, 142, 247, 0.4);
+        z-index: 0;
+      }
+      .hero-photo {
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+        border: 3px solid var(--border);
+        display: block;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-eyebrow {
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .hero-name {
+        font-family: var(--font-head);
+        font-weight: 800;
+        font-size: clamp(3.2rem, 6vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .hero-name .highlight {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--accent);
+      }
+      .hero-title {
+        font-family: var(--font-head);
+        font-size: clamp(1.1rem, 2vw, 1.6rem);
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 32px;
+        letter-spacing: -0.01em;
+      }
+      .hero-summary {
+        max-width: 560px;
+        font-size: 1rem;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 40px;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 36px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+      }
+      .stat {
+        display: flex;
+        flex-direction: column;
+      }
+      .stat-num {
+        font-family: var(--font-head);
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text);
+        letter-spacing: -0.03em;
+      }
+      .stat-num span {
+        color: var(--accent);
+      }
+      .stat-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .hero-cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      /* BUTTONS */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 26px;
+        border-radius: 6px;
+        font-family: var(--font-body);
+        font-size: 0.88rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: all 0.25s;
+        border: none;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: var(--accent2);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(79, 142, 247, 0.3);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      /* SECTIONS */
+      section {
+        padding: 100px 60px;
+      }
+      .section-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .section-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .section-label::before {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .section-heading {
+        font-family: var(--font-head);
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        line-height: 1.1;
+        margin-bottom: 60px;
+      }
+      .section-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 0 60px;
+      }
+
+      /* SKILLS */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+      }
+      .skill-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+      }
+      .skill-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-4px);
+      }
+      .skill-card-icon {
+        font-size: 1.5rem;
+        margin-bottom: 14px;
+      }
+      .skill-card h4 {
+        font-family: var(--font-head);
+        font-size: 0.85rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .tag {
+        font-size: 0.78rem;
+        padding: 4px 10px;
+        border-radius: 4px;
+        background: rgba(79, 142, 247, 0.1);
+        color: var(--accent);
+        border: 1px solid rgba(79, 142, 247, 0.2);
+        font-weight: 500;
+      }
+      .tag.purple {
+        background: rgba(124, 92, 252, 0.1);
+        color: #a78bfa;
+        border-color: rgba(124, 92, 252, 0.2);
+      }
+      .tag.gold {
+        background: rgba(240, 180, 58, 0.1);
+        color: var(--gold);
+        border-color: rgba(240, 180, 58, 0.2);
+      }
+      .certs-row {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+      }
+      .cert-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 40px;
+        padding: 10px 20px;
+        font-size: 0.85rem;
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* TIMELINE */
+      .timeline {
+        position: relative;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 140px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--border) 10%,
+          var(--border) 90%,
+          transparent
+        );
+      }
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 0 40px;
+        margin-bottom: 56px;
+        position: relative;
+      }
+      .timeline-date {
+        text-align: right;
+        padding-right: 40px;
+        padding-top: 4px;
+      }
+      .timeline-date .year {
+        font-family: var(--font-head);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+        display: block;
+      }
+      .timeline-date .months {
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .timeline-dot {
+        position: absolute;
+        left: 134px;
+        top: 8px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--accent);
+        z-index: 2;
+      }
+      .timeline-dot.current {
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(79, 142, 247, 0.2);
+      }
+      .timeline-body {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px 32px;
+        transition: border-color 0.3s;
+      }
+      .timeline-body:hover {
+        border-color: rgba(79, 142, 247, 0.4);
+      }
+      .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 6px;
+        flex-wrap: wrap;
+      }
+      .timeline-role {
+        font-family: var(--font-head);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      .timeline-badge {
+        font-size: 0.72rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .badge-current {
+        background: rgba(79, 142, 247, 0.15);
+        color: var(--accent);
+        border: 1px solid rgba(79, 142, 247, 0.3);
+      }
+      .badge-past {
+        background: rgba(136, 136, 170, 0.1);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .timeline-company {
+        font-size: 0.88rem;
+        color: var(--accent);
+        font-weight: 500;
+        margin-bottom: 16px;
+      }
+      .timeline-company .location {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .timeline-bullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .timeline-bullets li {
+        font-size: 0.9rem;
+        color: var(--muted);
+        padding-left: 16px;
+        position: relative;
+        line-height: 1.6;
+      }
+      .timeline-bullets li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 0.75rem;
+        top: 3px;
+      }
+      .timeline-bullets li strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .timeline-highlight {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 14px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--gold);
+        background: rgba(240, 180, 58, 0.08);
+        border: 1px solid rgba(240, 180, 58, 0.2);
+        padding: 6px 12px;
+        border-radius: 6px;
+      }
+
+      /* PROJECTS */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 24px;
+      }
+      .project-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition:
+          border-color 0.3s,
+          transform 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+      .project-card:hover {
+        border-color: rgba(79, 142, 247, 0.5);
+        transform: translateY(-6px);
+      }
+      .project-img-placeholder {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .project-content {
+        padding: 28px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .project-type {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .project-title {
+        font-family: var(--font-head);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 12px;
+        letter-spacing: -0.01em;
+      }
+      .project-desc {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.7;
+        flex: 1;
+        margin-bottom: 20px;
+      }
+      .project-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tech-pill {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .project-link {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        transition: gap 0.2s;
+      }
+      .project-link:hover {
+        gap: 8px;
+      }
+
+      /* EDUCATION */
+      .edu-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+      .edu-school {
+        font-family: var(--font-head);
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .edu-degree {
+        font-size: 0.95rem;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .edu-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .edu-badge {
+        font-size: 0.8rem;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-weight: 600;
+        text-align: center;
+      }
+      .edu-badge.gpa {
+        background: rgba(240, 180, 58, 0.12);
+        color: var(--gold);
+        border: 1px solid rgba(240, 180, 58, 0.25);
+      }
+      .edu-badge.award {
+        background: rgba(79, 142, 247, 0.12);
+        color: var(--accent);
+        border: 1px solid rgba(79, 142, 247, 0.25);
+      }
+
+      /* CONTACT */
+      .contact-section {
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        padding: 80px 60px;
+        text-align: center;
+      }
+      .contact-heading {
+        font-family: var(--font-head);
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      .contact-sub {
+        font-size: 1rem;
+        color: var(--muted);
+        margin-bottom: 40px;
+      }
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+      }
+      .footer-bottom {
+        font-size: 0.8rem;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        padding-top: 32px;
+        margin-top: 20px;
+      }
+
+      /* ANIMATIONS */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .fade-in-delay-1 {
+        transition-delay: 0.1s;
+      }
+      .fade-in-delay-2 {
+        transition-delay: 0.2s;
+      }
+      .fade-in-delay-3 {
+        transition-delay: 0.3s;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 900px) {
+        .hero-content {
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          gap: 40px;
+        }
+        .hero-photo-wrap {
+          width: 200px;
+          height: 200px;
+        }
+        .hero-photo {
+          width: 200px;
+          height: 200px;
+        }
+      }
+      @media (max-width: 768px) {
+        nav {
+          padding: 16px 24px;
+        }
+        .nav-links {
+          display: none;
+        }
+        section {
+          padding: 60px 24px;
+        }
+        .hero {
+          padding: 100px 24px 60px;
+        }
+        .section-divider {
+          margin: 0 24px;
+        }
+        .contact-section {
+          padding: 60px 24px;
+        }
+        .timeline::before {
+          left: 0;
+        }
+        .timeline-item {
+          grid-template-columns: 1fr;
+          padding-left: 24px;
+        }
+        .timeline-date {
+          text-align: left;
+          padding-right: 0;
+          margin-bottom: 8px;
+        }
+        .timeline-dot {
+          left: -6px;
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+      }
+    </style>
   </head>
-  <body class="is-preload">
-    <!-- Wrapper -->
-    <div id="wrapper" class="fade-in">
-      <!-- Intro -->
-      <div id="intro">
-
-		<style>
-			h1 {
-			  font-style: italic;
-			}
-		  </style>
-		</head>
-		<body>
-		  <h1>Isaac McSorley</h1>
-
-
-        <h2>My Portfolio</h2>
-        <ul class="actions">
-          <li>
-            <a
-              href="#header"
-              class="button icon solid solo fa-arrow-down scrolly"
-              >Continue</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <!-- Header -->
-      <header id="header">
-        <a href="index.html" class="logo">Welcome</a>
-      </header>
-
-      <!-- Nav -->
-      <nav id="nav">
-        <ul class="links">
-          <li class="active"><a href="index.html">Profile</a></li>
-		  <li><a href="assets/IsaacMcSorley.pdf" target="_blank">Resume</a></li>
-      <li><a href="#contact-info" class="scrolly">Contact</a></li>
-      <li><a href="#projects" class="scrolly">Projects</a></li>
-     <li><a href="assets/ikesimagery/index.html" class="scrolly">Drone Photography</a></li> 
-
-        </ul>
-        <ul class="icons">
-          <li>
-            <a
-              href="https://linkedin.com/in/immcsorley"
-              class="icon brands fa-linkedin"
-              ><span class="label">Instagram</span></a
-            >
-          </li>
-          <li>
-            <a
-              href="https://github.com/immcsorley"
-              class="icon brands fa-github"
-              ><span class="label">GitHub</span></a
-            >
-          </li>
-        </ul>
-      </nav>
-
-      <!-- Main -->
-      <div id="main">
-        <!-- Featured Post -->
-      <!-- START -->
-
-		  <head>
-			<title>Isaac McSorley | Portfolio</title>
-			<style>
-			  /* Style the container for the profile page */
-			  .profile {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
-				max-width: 960px;
-				margin: 0 auto;
-				padding: 40px;
-			  }
-		
-			  /* Style the image on the right side */
-			  .profile img {
-				width: 300px;
-				height: auto;
-				float: right;
-				border-radius: 100%;
-			  }
-		
-			  /* Style the title on the left side */
-			  .profile h1 {
-				font-size: 48px;
-				margin: 0;
-			  }
-			
-      		/* Style the header for the "About Me" section */
-      		.about-me h2 {
-        	font-size: 36px;
-        	margin-bottom: 16px;
-      		}
-	
-	</style>
-  </head>
-  
   <body>
-    <div class="profile">
-      <h1>Hello World! <br /> I'm Isaac McSorley</h1>
-      <img src="images/profile-pic.jpeg" alt="Isaac McSorley" >
-    </div>
-    <div style="text-align: center;">
-      <h2>About Me</h2>
-      <p> Hi, I'm Isaac! I am currently an analyst at JPMorgan Chase & Co. in Tampa, FL. I graduated with my Masters in Business Analytics from the University of Iowa in 2023. 
-        I have experience cleaning, engineering, and modeling data using Python, R, and SQL. I also frequently work with Snwoflake and Tableau for data engineering and visualization.  
-        When I'm not coding, I enjoy playing golf, working out, eating good food, or hanging out with friends. I also love to take drone videography.
-        Please check out my experience and projects below and feel free to reach out!</p>
-      <h2>Experience - Current</h2>
-      <p style="text-align: center;">
-        <strong>JP Morgan Chase & Co.</strong><br/>
-        Corporate Analyst Development Program Full Time Analyst - Tampa, FL
-      </p>
-    </p>
-    <p style="text-align: center;">
-      <strong>Elevated Impact Solutions</strong><br/>
-      Small Business Owner - Web Design & CRM 
-    </p>
-    <h2>Experience - Past</h2>
-      <p style="text-align: center;">
-        <strong>JP Morgan Chase & Co.</strong><br/>
-        Global Finance Summer Analyst - Chicago, IL
-      </p>
-      <p style="text-align: center;">
-        <strong>Spartan Forge - Deer Movement Prediction App (Startup)</strong><br/>
-        Machine Learning Research Intern - Remote
-      </p>
-      <p style="text-align: center;">
-        <strong>The University of Iowa College of Nursing</strong><br/>
-        Database Developer - Iowa City, IA
-      </p>
-      <p style="text-align: center;">
-        <strong>HNI Corporation</strong><br/>
-        Data Analyst Intern - Muscatine, IA
-      </p>
-      <p style="text-align: center;">
-        <strong>Bison Lawn Care</strong><br/>
-        Business Owner - New London, IA
-      </p>
-      <p>
-        These diverse experiences at both fortune 500 companies and startup companies alike have enabled me to develop a broad skill set, making me a well-rounded individual with knowledge in many different fields and working with both very large and very small companies. Although I am still young, I have had many experiences that have taught me a variety of skills to prepare me for the world of business. 
-      </p>
+    <!-- NAV -->
+    <nav>
+      <span class="nav-logo">Isaac<span>.</span></span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-icons">
+        <a
+          href="https://linkedin.com/in/immcsorley"
+          target="_blank"
+          title="LinkedIn"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+            />
+          </svg>
+        </a>
+        <a href="https://github.com/immcsorley" target="_blank" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+            />
+          </svg>
+        </a>
+      </div>
+    </nav>
 
-  
+    <!-- HERO -->
+    <section class="hero" id="about">
+      <div class="hero-glow"></div>
+      <div class="hero-glow2"></div>
+      <div class="hero-content">
+        <!-- LEFT: text -->
+        <div class="hero-text">
+          <p class="hero-eyebrow fade-in">
+            Available for new opportunities · Tampa, FL
+          </p>
+          <h1 class="hero-name fade-in fade-in-delay-1">
+            Isaac<br /><span class="highlight">McSorley</span>
+          </h1>
+          <p class="hero-title fade-in fade-in-delay-2">
+            Data Analyst &amp; BI Engineer
+          </p>
+          <p class="hero-summary fade-in fade-in-delay-2">
+            Data Analyst with 3+ years of experience in financial services and
+            fintech, specializing in automated data pipelines, BI dashboard
+            development, and translating complex datasets into executive-ready
+            insights. Currently at JPMorganChase, building analytics
+            infrastructure across Omnichannel Payments.
+          </p>
+          <div class="hero-stats fade-in fade-in-delay-3">
+            <div class="stat">
+              <span class="stat-num">$180<span>K</span></span
+              ><span class="stat-label">Annualized Savings Found</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">3<span>+</span></span
+              ><span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">10<span>+</span></span
+              ><span class="stat-label">Client Websites Built</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">50<span>%+</span></span
+              ><span class="stat-label">Manual Labor Reduction</span>
+            </div>
+          </div>
+          <div class="hero-cta fade-in fade-in-delay-3">
+            <a href="#experience" class="btn btn-primary">View Experience ↓</a>
+            <a href="isaacmcsorley.pdf" target="_blank" class="btn btn-outline"
+              >View Resume</a
+            >
+            <a href="mailto:isaacmcsorley@gmail.com" class="btn btn-outline"
+              >Get In Touch</a
+            >
+          </div>
+        </div>
+
+        <!-- RIGHT: photo -->
+        <div class="hero-photo-wrap fade-in fade-in-delay-2">
+          <div class="hero-photo-glow"></div>
+          <div class="hero-photo-ring"></div>
+          <img
+            src="images/profile-pic.jpeg"
+            alt="Isaac McSorley"
+            class="hero-photo"
+          />
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- SKILLS -->
+    <section>
+      <div class="section-inner">
+        <p class="section-label">Technical Toolkit</p>
+        <h2 class="section-heading">Skills &amp; Technologies</h2>
+        <div class="skills-grid">
+          <div class="skill-card fade-in">
+            <div class="skill-card-icon">📊</div>
+            <h4>Analytics &amp; BI</h4>
+            <div class="skill-tags">
+              <span class="tag">Tableau</span><span class="tag">Power BI</span
+              ><span class="tag">Excel (Advanced)</span>
+            </div>
+          </div>
+          <div class="skill-card fade-in fade-in-delay-1">
+            <div class="skill-card-icon">💻</div>
+            <h4>Languages</h4>
+            <div class="skill-tags">
+              <span class="tag purple">Python</span
+              ><span class="tag purple">SQL</span
+              ><span class="tag purple">R</span>
+            </div>
+          </div>
+          <div class="skill-card fade-in fade-in-delay-2">
+            <div class="skill-card-icon">🗄️</div>
+            <h4>Data Platforms</h4>
+            <div class="skill-tags">
+              <span class="tag">Snowflake</span><span class="tag">AWS</span
+              ><span class="tag">Alteryx</span><span class="tag">JIRA</span>
+            </div>
+          </div>
+          <div class="skill-card fade-in fade-in-delay-3">
+            <div class="skill-card-icon">⚙️</div>
+            <h4>Competencies</h4>
+            <div class="skill-tags">
+              <span class="tag gold">ETL / Pipelines</span
+              ><span class="tag gold">Statistical Modeling</span
+              ><span class="tag gold">Cohort Analysis</span
+              ><span class="tag gold">Process Automation</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 40px">
+          <p class="section-label" style="margin-bottom: 16px">
+            Certifications
+          </p>
+          <div class="certs-row">
+            <div class="cert-pill">
+              <span>🔷</span> Microsoft Azure Fundamentals
+            </div>
+            <div class="cert-pill"><span>🔶</span> Alteryx Designer Core</div>
+            <div class="cert-pill"><span>❄️</span> Snowflake SnowPro Core</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- TIMELINE -->
+    <section id="experience">
+      <div class="section-inner">
+        <p class="section-label">Career History</p>
+        <h2 class="section-heading">Experience Timeline</h2>
+        <div class="timeline">
+          <div class="timeline-item fade-in">
+            <div class="timeline-date">
+              <span class="year">2025</span
+              ><span class="months">Dec – Present</span>
+            </div>
+            <div class="timeline-dot current"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Omnichannel Payments Support Analytics Analyst</span
+                ><span class="timeline-badge badge-current">Current</span>
+              </div>
+              <div class="timeline-company">
+                JPMorganChase <span class="location">· Tampa, FL</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Designed a <strong>Tableau dashboard</strong> integrating
+                  Monday.com data to surface support KPIs — case volume,
+                  escalations, SLAs, and aging trends — enabling real-time
+                  monitoring of resolution performance
+                </li>
+                <li>
+                  Built an
+                  <strong>enterprise client adoption analytics dashboard</strong
+                  >, uncovering regional performance trends and informing
+                  expansion strategy
+                </li>
+                <li>
+                  Optimized high-volume client reporting pipelines, improving
+                  dashboard accuracy across
+                  <strong>millions of transactions</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in fade-in-delay-1">
+            <div class="timeline-date">
+              <span class="year">2025</span
+              ><span class="months">Apr – Nov</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Omnichannel Payments Strategy &amp; Performance Analyst</span
+                ><span class="timeline-badge badge-past">Full-Time</span>
+              </div>
+              <div class="timeline-company">
+                JPMorganChase <span class="location">· Tampa, FL</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Engineered
+                  <strong>end-to-end automated data pipelines</strong> in
+                  Snowflake and Alteryx to cleanse, standardize, and publish
+                  operational and billing data to Tableau
+                </li>
+                <li>
+                  Automated billing reconciliation logic using
+                  <strong>Python and SQL</strong>, reclaiming 1–2 hours of
+                  manual effort weekly
+                </li>
+                <li>
+                  Developed interactive dashboards tracking hardware payment
+                  device return/replacement rates, active/inactive status, and
+                  data usage patterns
+                </li>
+                <li>
+                  Presented cost-saving analyses and KPI performance trends to
+                  <strong>senior leadership</strong>
+                </li>
+              </ul>
+              <div class="timeline-highlight">
+                ⚡ $180K annualized savings identified through systematic
+                billing error analysis
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-date">
+              <span class="year">2024</span
+              ><span class="months">Jul – Mar '25</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Merchant Services Platform Onboarding Analyst</span
+                ><span class="timeline-badge badge-past">Full-Time</span>
+              </div>
+              <div class="timeline-company">
+                JPMorganChase <span class="location">· Tampa, FL</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Supported analytics and tracking for a
+                  <strong>new investment bank onboarding product</strong>,
+                  ensuring data accuracy throughout the lifecycle
+                </li>
+                <li>
+                  Led <strong>cross-system data mapping</strong> across
+                  Snowflake, JIRA, and Excel to improve data integrity and meet
+                  compliance requirements
+                </li>
+                <li>
+                  Built dashboards and
+                  <strong>automated validation workflows</strong> to monitor
+                  onboarding KPIs and enable self-serve reporting
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in fade-in-delay-1">
+            <div class="timeline-date">
+              <span class="year">2024</span
+              ><span class="months">Jan – Present</span>
+            </div>
+            <div class="timeline-dot current"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Founder &amp; Web/CRM Solutions Consultant</span
+                ><span class="timeline-badge badge-current">Active</span>
+              </div>
+              <div class="timeline-company">
+                Elevated Impact Solutions <span class="location">· Remote</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Build and manage
+                  <strong>data-driven websites and custom CRM workflows</strong>
+                  for 10+ local businesses
+                </li>
+                <li>
+                  Automate client outreach and lead management pipelines to
+                  improve operational efficiency
+                </li>
+                <li>
+                  Develop
+                  <strong>SEO-optimized, mobile-first web solutions</strong>
+                  with ongoing analytics strategy
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-date">
+              <span class="year">2023</span
+              ><span class="months">Jan – Dec</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Graduate Teaching Assistant – Data Mining</span
+                ><span class="timeline-badge badge-past">Academic</span>
+              </div>
+              <div class="timeline-company">
+                Tippie College of Business, University of Iowa
+                <span class="location">· Iowa City, IA</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Instructed <strong>200+ students</strong> in supervised and
+                  unsupervised machine learning modeling techniques
+                </li>
+                <li>
+                  Developed
+                  <strong>Python grading automation scripts</strong> reducing
+                  manual grading time by 50%+
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in fade-in-delay-1">
+            <div class="timeline-date">
+              <span class="year">2023</span
+              ><span class="months">Jun – Aug</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Summer Analyst – Commercial Banking Product Finance</span
+                ><span class="timeline-badge badge-past">Internship</span>
+              </div>
+              <div class="timeline-company">
+                JPMorganChase <span class="location">· Tampa, FL</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Led an <strong>ETL project automating reporting</strong> for
+                  the pricing team using Alteryx and Tableau
+                </li>
+                <li>
+                  Reduced
+                  <strong>3–4 hours of manual labor per month</strong> and
+                  improved insight delivery across multiple KPIs
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in">
+            <div class="timeline-date">
+              <span class="year">2022</span
+              ><span class="months">Oct – May '23</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role"
+                  >Machine Learning Research Intern</span
+                ><span class="timeline-badge badge-past">Internship</span>
+              </div>
+              <div class="timeline-company">
+                Spartan Forge (AI Startup)
+                <span class="location">· Remote</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Integrated
+                  <strong>normalized mapping vector layers</strong> into the
+                  application backend using Python
+                </li>
+                <li>
+                  Improved mapping quality and user experience for
+                  <strong>thousands of active users</strong> of the deer
+                  prediction platform
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in fade-in-delay-1">
+            <div class="timeline-date">
+              <span class="year">2022</span
+              ><span class="months">Feb – May</span>
+            </div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-role">Database Developer</span
+                ><span class="timeline-badge badge-past">Internship</span>
+              </div>
+              <div class="timeline-company">
+                University of Iowa College of Nursing
+                <span class="location">· Remote</span>
+              </div>
+              <ul class="timeline-bullets">
+                <li>
+                  Built a <strong>relational database</strong> tracking 100+
+                  hospitals and 2,000+ nursing residents enrolled annually
+                </li>
+                <li>
+                  Developed automated workflows for
+                  <strong>data collection, reporting, and invoicing</strong> —
+                  reducing invoicing time by 50%
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-inner">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-heading">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card fade-in">
+            <div class="project-img-placeholder">🗄️</div>
+            <div class="project-content">
+              <p class="project-type">Database Development</p>
+              <h3 class="project-title">Nursing Residency Program Database</h3>
+              <p class="project-desc">
+                Designed a relational Microsoft Access database for U of I's
+                Nursing Residency Program. Integrated customer/sales data,
+                custom forms, and automated reports — reducing manual labor by
+                over 50% and enabling self-serve invoicing.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">MS Access</span
+                  ><span class="tech-pill">SQL</span
+                  ><span class="tech-pill">VBA</span>
+                </div>
+                <a
+                  href="https://github.com/immcsorley/DatabaseProject"
+                  target="_blank"
+                  class="project-link"
+                  >GitHub →</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card fade-in fade-in-delay-1">
+            <div class="project-img-placeholder">📉</div>
+            <div class="project-content">
+              <p class="project-type">Machine Learning</p>
+              <h3 class="project-title">Credit Card Churn Rate Prediction</h3>
+              <p class="project-desc">
+                Supervised ML project analyzing credit card data to predict
+                customer churn. Best model (gradient boosting) achieved AUC of
+                .9911, 96% precision, and 85.7% recall. Recommendations included
+                cashback and travel reward incentives.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">Python</span
+                  ><span class="tech-pill">scikit-learn</span
+                  ><span class="tech-pill">XGBoost</span>
+                </div>
+                <a
+                  href="https://github.com/immcsorley/ChurnRateProject"
+                  target="_blank"
+                  class="project-link"
+                  >GitHub →</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card fade-in fade-in-delay-2">
+            <div class="project-img-placeholder">✈️</div>
+            <div class="project-content">
+              <p class="project-type">Data Analysis</p>
+              <h3 class="project-title">
+                Best Flight Analysis: Chicago O'Hare
+              </h3>
+              <p class="project-desc">
+                Statistical analysis of 5M+ commercial flights from the 2015
+                Kaggle dataset to help travelers choose the best airline and day
+                to fly from O'Hare. In-depth statistical report with actionable
+                findings for frequent fliers.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">R</span
+                  ><span class="tech-pill">ggplot2</span
+                  ><span class="tech-pill">Statistics</span>
+                </div>
+                <a
+                  href="https://github.com/immcsorley/ChicagoO-Hare"
+                  target="_blank"
+                  class="project-link"
+                  >GitHub →</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card fade-in">
+            <div class="project-img-placeholder">🗺️</div>
+            <div class="project-content">
+              <p class="project-type">Geovisualization</p>
+              <h3 class="project-title">Chicago Bikeshare Flow Map</h3>
+              <p class="project-desc">
+                Interactive flow map revealing that bikeshare activity
+                concentrates along a north-south corridor around the Loop and
+                Navy Pier — influenced by business density, Divvy bike
+                availability, and route accessibility.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">D3.js</span
+                  ><span class="tech-pill">JavaScript</span
+                  ><span class="tech-pill">GIS</span>
+                </div>
+                <a
+                  href="https://immcsorley.github.io/flow_map.html"
+                  target="_blank"
+                  class="project-link"
+                  >Live →</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card fade-in fade-in-delay-1">
+            <div class="project-img-placeholder">📍</div>
+            <div class="project-content">
+              <p class="project-type">Geovisualization</p>
+              <h3 class="project-title">
+                U.S. Black Population Distribution Map
+              </h3>
+              <p class="project-desc">
+                Graduated symbol map using proportional circles to illustrate
+                spatial patterns in U.S. Black population distribution. Reveals
+                higher concentrations in the Southeast and major urban centers,
+                with socio-economic context.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">Observable</span
+                  ><span class="tech-pill">D3.js</span
+                  ><span class="tech-pill">Census Data</span>
+                </div>
+                <a
+                  href="https://observablehq.com/d/667ad2aab4ad4367"
+                  target="_blank"
+                  class="project-link"
+                  >View →</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="project-card fade-in fade-in-delay-2">
+            <div class="project-img-placeholder">🏙️</div>
+            <div class="project-content">
+              <p class="project-type">Geovisualization</p>
+              <h3 class="project-title">LA County Bivariate Choropleth</h3>
+              <p class="project-desc">
+                Bivariate choropleth map showing the inverse relationship
+                between Median Family Income and Poverty Rate in LA County
+                census tracts. Darker shades highlight low-income, high-poverty
+                areas in south and northeast regions.
+              </p>
+              <div class="project-footer">
+                <div class="project-tech">
+                  <span class="tech-pill">Observable</span
+                  ><span class="tech-pill">D3.js</span
+                  ><span class="tech-pill">Census Data</span>
+                </div>
+                <a
+                  href="https://observablehq.com/d/794e90795399806c"
+                  target="_blank"
+                  class="project-link"
+                  >View →</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-inner">
+        <p class="section-label">Academic Background</p>
+        <h2 class="section-heading">Education</h2>
+        <div class="edu-card fade-in">
+          <div>
+            <div class="edu-school">University of Iowa</div>
+            <div class="edu-degree" style="margin-bottom: 8px">
+              Tippie College of Business
+            </div>
+            <div class="edu-degree">
+              Master of Science, Business Analytics · <em>December 2023</em>
+            </div>
+            <div class="edu-degree">
+              B.B.A., Business Analytics &amp; Information Systems ·
+              <em>December 2022</em>
+            </div>
+          </div>
+          <div class="edu-badges">
+            <span class="edu-badge gpa">GPA 3.7</span>
+            <span class="edu-badge award">Dean's List</span>
+            <span class="edu-badge award"
+              >🥇 1st – USITCC National Case Competition</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <div class="contact-section" id="contact">
+      <h2 class="contact-heading fade-in">Let's Work Together</h2>
+      <p class="contact-sub fade-in">
+        Open to full-time opportunities and freelance projects in data
+        analytics, BI engineering, and web development.
+      </p>
+      <div class="contact-links fade-in">
+        <a href="mailto:isaacmcsorley@gmail.com" class="btn btn-primary"
+          >isaacmcsorley@gmail.com</a
+        >
+        <a
+          href="https://linkedin.com/in/immcsorley"
+          target="_blank"
+          class="btn btn-outline"
+          >LinkedIn</a
+        >
+        <a
+          href="https://github.com/immcsorley"
+          target="_blank"
+          class="btn btn-outline"
+          >GitHub</a
+        >
+        <a href="isaacmcsorley.pdf" target="_blank" class="btn btn-outline"
+          >View Resume</a
+        >
+      </div>
+      <div class="footer-bottom">
+        <p>Isaac McSorley · Tampa, FL · Built with HTML, CSS &amp; ☕</p>
+      </div>
     </div>
 
     <script>
-      function openImage(imageSrc) {
-        var img = $('<img>').attr('src', imageSrc).css({
-          'max-width': '90%',
-          'max-height': '90%',
-          'position': 'fixed',
-          'top': '50%',
-          'left': '50%',
-          'transform': 'translate(-50%, -50%)',
-          'z-index': '1000'
-        });
-    
-        var overlay = $('<div>').css({
-          'background-color': 'rgba(0, 0, 0, 0.7)',
-          'width': '100%',
-          'height': '100%',
-          'position': 'fixed',
-          'top': '0',
-          'left': '0',
-          'z-index': '999'
-        }).on('click', function() {
-          $(this).remove();
-          img.remove();
-        });
-    
-        $('body').append(overlay);
-        $('body').append(img);
-      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1 },
+      );
+      document
+        .querySelectorAll(".fade-in")
+        .forEach((el) => observer.observe(el));
+      document.querySelectorAll(".hero .fade-in").forEach((el, i) => {
+        setTimeout(() => el.classList.add("visible"), i * 120);
+      });
     </script>
-    
-      <!-- Projects Section -->
-      <div id="projects">
-		  <article>
-            <header>
-              <div style="text-align: center;">
-                <h2><u>Data Science / Analytics Projects</u></h2>
-              </div>
-            </header>
-       
-
-        <!-- Posts -->
-        <section class="posts">
-          <article>
-            <header>
-              <h2>
-                <a href="https://github.com/immcsorley/DatabaseProject"
-                  >1. Database development for the College of Nursing</a
-                >
-              </h2>
-              <p><strong>Skills Used: </strong>Microsoft Access, SQL Queries, VBA, Relational Schema </p>
-            </header>
-            <a href="https://github.com/immcsorley/DatabaseProject" class="image fit"
-              ><img src="images/pic01.png" alt=""
-            /></a>
-            <p>
-              For the University of Iowa's Nursing Residency Program, I designed a relational Microsoft Access database that streamlined their data management process. By integrating their customer and sales information, as well as creating custom forms and automated reports, I reduced manual labor by over 50%. The database allows the company to track customers, manage invoicing, and gain valuable insights through easy-to-use reports. With the ability to search and edit customer data and create professional invoices, this database provides a comprehensive solution for the company's data management.
-      
-            </p>
-            <ul class="actions special">
-              <li><a href="https://github.com/immcsorley/DatabaseProject" class="button">Check it out</a></li>
-            </ul>
-            <br>
-          </article>
-          <article>
-            <header>
-              <h2>
-                <a href="https://github.com/immcsorley/SentimentAnalysis"
-                  >2. Sentiment Analysis of The Hill: Exploring Political Sentiment across Topic Categories </a
-                >
-              </h2>
-              <p><strong>Skills Used: </strong>Python, Machine Learning</p>
-            </header>
-            <a href="https://github.com/immcsorley/SentimentAnalysis" class="image fit"
-              ><img src="images/project2.png" alt=""
-            /></a>
-            <p>
-              <p>This sentiment analysis project focused on analyzing sentiment in articles scraped from <strong> <a href="https://www.thehill.com" target="_blank">The Hill</a>, </strong>a 
-                prominent news outlet covering politics and government affairs in the United States. I explored how 
-                sentiment varies across different topic categories such as News, Policy, Business, Opinion, Events, and Jobs. 
-                Through web scraping and data analysis, I aimed to provide insights into the political landscape and contribute 
-                to the field of text analytics. The repository contains code, documentation, and findings, inviting others to learn
-                and contribute to our work in sentiment analysis.</p>
-                
-            </p>
-            <ul class="actions special">
-              <li><a href="https://github.com/immcsorley/SentimentAnalysis" class="button">Check it out</a></li>
-            </ul>
-            <br>
-          </article>
-          <article>
-          <article>
-            <header>
-              <h2>
-                <a href="https://github.com/immcsorley/ChurnRateProject"
-                  >3. Credit Card Churn Rate Predictive Modeling </a
-                >
-              </h2>
-              <p><strong>Skills Used: </strong>R, Machine Learning, RStudio </p>
-            </header>
-            <a href="https://github.com/immcsorley/ChurnRateProject" class="image fit"
-              ><img src="images/pic02.png" alt=""
-            /></a>
-            <p>
-				This project used supervised machine learning to analyze credit card company data 
-				and build a model to predict customer churn. Exploratory analysis revealed that 
-				customers with lower transaction numbers and amounts, lower revolving balances,
-				 and fewer total products were more likely to churn. 
-				 <br /> <br />
-				 The best model, a gradient boosting model, had an AUC of .9911 and an average error rate of 7.6%. The model 
-				 had a precision of 96% and a recall of 85.7%. The conclusion and recommendations 
-				 suggest that the company should offer incentives such as cashback rewards and travel
-				amenities to retain customers.
-            </p>
-            <ul class="actions special">
-              <li><a href="https://github.com/immcsorley/ChurnRateProject" class="button">Check it out</a></li>
-            </ul>
-            <br>
-          </article>
-          <article>
-            <header>
-              <h2>
-                <a href="https://github.com/immcsorley/ChicagoO-Hare"
-                  >4. Best Flight Analysis: Chicago O' Hare Airport </a
-                >
-              </h2>
-              <p><strong>Skills Used: </strong>SQL, Oracle Apex</p>
-            </header>
-            <a href="https://github.com/immcsorley/ChicagoO-Hare" class="image fit"
-              ><img src="images/pic03.png" alt=""
-            /></a>
-            <p>
-				This project aims to ease the airport experience for travelers by providing statistical data to help 
-				choose an airline and day to fly from Chicago O'Hare International Airport. 
-				The project uses data from the 2015 Kaggle data on Commercial Air Flight Delays, 
-				which includes over 5 million commercial flights.
-				The report provides an in-depth analysis 
-				of the data, and frequent fliers of O'Hare can benefit from it. The website provides screenshots of the 
-				final report.
-            </p>
-            <ul class="actions special">
-              <li><a href="https://github.com/immcsorley/ChicagoO-Hare" class="button">Check it out</a></li>
-            </ul>
-          </article>
-          <article>
-            
-          </div>
-      </section>
-        
-<!-- Geovisualization Portfolio -->
-
-<style>
-  .description {
-    line-height: 1.35; /* Adjust this value as needed; lower values will make the line spacing tighter */
-  }
-  .image.fit img {
-    height: 275px; /* Set a fixed height for images */
-    object-fit: cover; /* Ensure the images maintain their aspect ratio */
-  }
-  .geo-portfolio-section {
-  margin-top: -40px;
-}
-
-</style>
-<section class="geo-portfolio-section">
-  <header>
-    <div style="text-align: center;">
-      <h2><u> Geovisualization Portfolio </u></h2>
-    </div>
-    <p>All mapping was done using javascript and the d3 library. I utilized Observable Notebooks to create many of the maps. Many are assignments from my Geographical Visualization class. </p>
-  </header>
-  <div class="posts" style="display: flex; justify-content: space-between;">
-    <article style="flex: 1; margin-right: 20px; box-sizing: border-box;">
-      <header>
-        <h3><a href="javascript:openImage('images/geo1.png')">Chicago Bikeshare Flows</a></h3>
-      </header>
-      <a href="javascript:openImage('images/geo1.png')" class="image fit"><img src="images/geo1.png" alt="Geo Project 1" /></a>
-      <p class="description">The spatial patterns reveal that bikeshare activity primarily occurs in a north-south direction within Chicago, concentrating around the downtown Loop area and Navy Pier. These patterns suggest the influence of location characteristics such as density of businesses, traffic, bikeshare routes, and availability of Divvy bikes. </p>  
-      <div style="text-align: center;">
-        <a href="https://immcsorley.github.io/assets/flow_map.html" target="_blank" class="button small">Check it out</a>
-      </div>      
-    </p>
-    </article>
-    <article style="flex: 1; box-sizing: border-box;">
-      <header>
-        <h3><a href="javascript:openImage('images/geo3.png')">Black Population in the U.S.</a></h3>
-      </header>
-      <a href="javascript:openImage('images/geo3.png')" class="image fit"><img src="images/geo3.png" alt="Geo Project 3" /></a>
-      <p class="description">This graduated symbol map illustrates the distribution of the Black population in the United States using proportional circles. The spatial patterns reveal higher concentrations in the Southeast and urban areas nationwide. These patterns provide insight into the historical, cultural, and socio-economic factors shaping population distributions.
-      <br />
-      <div style="text-align: center;">
-      <a href="https://observablehq.com/d/667ad2aab4ad4367" target="_blank" class="button small">View code </a>
-      </div>
-      </p>
-    </article>
-    
-  </div>
-
-  <div class="posts" style="display: flex; justify-content: space-between;">
-    <article style="flex: 1; margin-right: 20px; box-sizing: border-box; display: flex; flex-direction: column;">
-      <header>
-        <h3><a href="javascript:openImage('images/geo1.png')">LA County Population</a></h3>
-      </header>
-      <a href="javascript:openImage('images/geo4.png')" class="image fit"><img src="images/geo4.png" alt="Geo Project 1" /></a>
-      <p class="description">This chloropleth map shows the population in Los Angeles County California. It allows the user to see which areas of the county contain a higher number of residents. This shows although some areas are very large in geographic size, they can still have a lower population, while other small areas contain a large number of people.</p>
-      <div style="text-align: center; margin-top: auto;">
-        <a href="https://observablehq.com/d/935b7dbdda5c30b5" target="_blank" class="button small">View code </a>
-      </div>
-    </article>
-    <article style="flex: 1; margin-right: 20px; box-sizing: border-box; display: flex; flex-direction: column;">
-      <header>
-        <h3><a href="javascript:openImage('images/geo2.png')">Income vs Poverty  </a></h3>
-      </header>
-      <a href="javascript:openImage('images/geo2.png')" class="image fit"><img src="images/geo2.png" alt="Geo Project 2" /></a>
-      <p class="description">This bivariate choropleth map highlights the inverse relationship between Median Family Income and Poverty Rate in LA County census tracts. Darker colors represent areas with low income and high poverty, particularly in the middle south and northeast corners of the county.</p>
-      <div style="text-align: center; margin-top: auto;">
-        <a href="https://observablehq.com/d/794e90795399806c" target="_blank" class="button small">View code </a>
-      </div>
-    </article>
-    <article style="flex: 1; margin-right: 20px; box-sizing: border-box; display: flex; flex-direction: column;">
-      <header>
-        <h3><a href="javascript:openImage('images/geo2.png')">U.S. Alcohol Consumption </a></h3>
-      </header>
-      <a href="javascript:openImage('images/geo5.png')" class="image fit"><img src="images/geo5.png" alt="Geo Project 2" /></a>
-      <p class="description">The overarching goal of this project is to analyze alcohol consumption trends for each state in the US between the years 2006-2016. We want to gain an understanding of the drinking practices of each state, as well as overall consumption trends.</p>
-      <div style="text-align: center; margin-top: auto;">
-        <a href="https://observablehq.com/d/973f40943b0cd02c" target="_blank" class="button small">View code </a>
-      </div>
-    </article>
-  </div>
-  
-</section>
-
-<section>  
-  <article>
-    <header>
-      <h2>
-        <a href="assets/smallmultiples/index.html"
-        <center> Florida Housing Statistics  </center> 
-        </a
-      </h2>
-    </header>
-    <a href="assets/smallmultiples/index.html" class="image fit">
-      <div class="square-image-container" style="background-image: url('images/geo6.png');"></div>
-    </a>
-    <p>
-      The Small Multiples Mapping of Florida data is a comprehensive visual representation that showcases key demographic and 
-      housing statistics at the county level. This interactive map features three distinct data points: population density 
-      (measured in population per square mile), median age, and the number of owner-occupied to renter-occupied housing. 
-      By presenting these essential metrics, the map offers valuable insights into the regional trends and variations across Florida, 
-      enabling policymakers, researchers, and the general public to better understand the underlying patterns and dynamics within the 
-      state's communities.
-    </p>
-    <ul class="actions special">
-      <li><a href="assets/smallmultiples/index.html" class="button">Check it out</a></li>
-    </ul>
-  </article>
-</section>
-
-
-
-      </div>
-
-
-      <!-- Footer -->
-      <div id="contact-info">
-      <footer id="footer">          
-        </section>
-        <section class="split contact">
-          <section class="alt">
-            <h3>Location</h3>
-            <p>
-              I currently reside in <strong>Iowa City, IA</strong> but relocating to <strong>Tampa, FL</strong> post graduation<br />
-            </p>
-            
-          </section>
-        
-          <section>
-            <h3>Email</h3>
-            <p><a href="mailto:isaacmcsorley@gmail.com">isaacmcsorley@gmail.com</a></p>
-          </section>
-          <section>
-            <h3>Socials</h3>
-            <ul style="list-style-type: none; padding: 0;">
-              <li style="display: inline-block; margin-right: 10px;">
-                <a href="https://linkedin.com/in/immcsorley" class="icon brands alt fa-linkedin">
-                  <span class="label">Linkedin</span>
-                </a>
-              </li>
-              <li style="display: inline-block;">
-                <a href="https://github.com/immcsorley" class="icon brands alt fa-github">
-                  <span class="label">GitHub</span>
-                </a>
-              </li>
-            </ul>
-            
-          </section>
-        </section>
-      </footer>
-      </div>
-
-     
-    </div>
-
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
   </body>
 </html>
